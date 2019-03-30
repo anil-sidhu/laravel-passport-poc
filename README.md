@@ -13,7 +13,7 @@ for your Laravel application development in a matter of minutes.
 
 
 ## Getting Started
-### Step 2: Install Package
+### Step 1: Install Package
 
 ```` composer require laravel/passport ````
 
@@ -28,7 +28,7 @@ Laravel\Passport\PassportServiceProvider::class,
 
 ````
 
-## Step 3: Run Migration and Install
+## Step 2: Run Migration and Install
 
 ```javascript 
 
@@ -39,7 +39,7 @@ php artisan passport:install
 ````
 
 
-## Step 4: Passport Configuration  app/User.php
+## Step 3: Passport Configuration  app/User.php
 
 ```javascript 
 
@@ -107,7 +107,7 @@ class AuthServiceProvider extends ServiceProvider
 
 ````
 
-## Step 5 :config/auth.php
+## Step 4 :config/auth.php
 
 ```javascript 
 
@@ -125,7 +125,7 @@ return [
     ],
 
 ````
-## Step 6: Create API Route
+## Step 5: Create API Route
 
 ```javascript 
 
@@ -149,7 +149,7 @@ Route::post('details', 'API\UserController@details');
 ````
 
 
-## Step 7: Create the Controller
+## Step 6: Create the Controller
 
 ```javascript 
 
@@ -215,7 +215,7 @@ return response()->json(['success'=>$success], $this-> successStatus);
 
 
 ````
-## Step 8: Run 
+## Step 7: Run 
 
 ```javascript 
 
