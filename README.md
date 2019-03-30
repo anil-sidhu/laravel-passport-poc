@@ -33,34 +33,77 @@ Laravel\Passport\PassportServiceProvider::class,
 ```javascript 
 
 php artisan migrate
+php artisan passport:install
 
 
 ````
 
-### Props
+
+## Step 4: Passport Configuration  app/User.php
+
+```javascript 
+
+<?php
+namespace App;
+use Laravel\Passport\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+class User extends Authenticatable
+{
+  use HasApiTokens, Notifiable;
+/**
+* The attributes that are mass assignable.
+*
+* @var array
+*/
+protected $fillable = [
+'name', 'email', 'password',
+];
+/**
+* The attributes that should be hidden for arrays.
+*
+* @var array
+*/
+protected $hidden = [
+'password', 'remember_token',
+];
+}
+
+````
 
 
-| Name          | Required | Type     | Default value | Description                                                                                                                  |
-|-----------------|----------|----------|---------------|------------------------------------------------------------------------------------------------------------------------------|
-|   apiKey    | Yes     | string   |      null         | need to get from google place api and pass as string. if key is invalid or empty result be b not found                                                                 |
-|   language    | optional     | string   |      en         | language will change the lanugae of search result it will support all lanugage which is suppored by google place api for help link is here  [Language suppored by google](https://developers.google.com/maps/faq#languagesupport)    |                                                     |
-|   country    | optional     | object   |               | country prop will change the country where you want to search .you can add 5 country for filter.  |
-|   coordinates    | optional     | boolean   |               | Coordinates props will return coordinates of selected place  |
-|   locationBoxStyle    | optional     | string   |               | locationBoxStyle allow your to make custom style of search box   |
-|   locationListStyle    | optional     | string   |               | locationListStyle allow your to make custom style of search list   |
+## app/Providers/AuthServiceProvider.php
 
 
-### Use multiple languages
 
-Pass key and value pair in the country object like this ```` country={in|country:pr|country:vi|country:gu|country:mp}  ````
+```javascript 
 
+<?php
+namespace App\Providers;
+use Laravel\Passport\Passport; 
+use Illuminate\Support\Facades\Gate; 
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+class AuthServiceProvider extends ServiceProvider 
+{ 
+    /** 
+     * The policy mappings for the application. 
+     * 
+     * @var array 
+     */ 
+    protected $policies = [ 
+        'App\Model' => 'App\Policies\ModelPolicy', 
+    ];
+/** 
+     * Register any authentication / authorization services. 
+     * 
+     * @return void 
+     */ 
+    public function boot() 
+    { 
+        $this->registerPolicies(); 
+        Passport::routes(); 
+    } 
+}
 
-### Get Api Key 
-
-##### You need to enable key for google place as well google geocode also
-click [here](https://developers.google.com/places/web-service/get-api-key)
-click on the GET A KEY button 
-now select a project or create new porject.
-Click on the Next and your key is enabled. You can copy this is key and pass as a apikey :)
-
+````
 
